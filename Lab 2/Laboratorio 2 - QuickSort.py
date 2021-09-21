@@ -1,7 +1,12 @@
 import random
 """
-Funções faltantes:
+O que falta:
 -função de particionador de mediana de 3
+-contar swaps
+-contar recursoes
+-cronometrar o tempo
+-ler arquivos de entrada
+-escrever em arquivos de saída
 """
 
 # Escolhe um particionador randomizado  (funcionando)
@@ -12,7 +17,7 @@ def part_random(array, start, end):
     array[n] = aux
 
 
-def par_mediana(array, start, end):
+def part_mediana(array, start, end):
     # Em progresso
     
  
