@@ -28,15 +28,12 @@ def hoare_partition(array, start, end):
     j = end + 1
 
     while True:
-
         i += 1
         while array[i] < pivot:
             i += 1
-
         j -= 1
         while array[j] > pivot:
             j -= 1
-
         if i >= j:
             return j
 
