@@ -135,7 +135,7 @@ with open('entrada2.txt', 'r') as f:
         tempo = fim - inicio
         with open('stats-mediana-hoare.txt', 'a') as arq:
             arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
-            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n\n')
+            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n')
 
         inicio = time.time()
         quick_sort_part3_lomuto(array2, start, end)
@@ -143,7 +143,7 @@ with open('entrada2.txt', 'r') as f:
         tempo = fim - inicio
         with open('stats-mediana-lomuto.txt', 'a') as arq:
             arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
-            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n\n')
+            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n')
 
         inicio = time.time()
         quick_sort_random_hoare(array3, start, end)
@@ -151,7 +151,7 @@ with open('entrada2.txt', 'r') as f:
         tempo = fim - inicio
         with open('stats-aleatorio-hoare.txt', 'a') as arq:
             arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
-            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n\n')
+            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n')
 
         inicio = time.time()
         quick_sort_random_lomuto(array4, start, end)
@@ -159,5 +159,5 @@ with open('entrada2.txt', 'r') as f:
         tempo = fim - inicio
         with open('stats-aleatorio-lomuto.txt', 'a') as arq:
             arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
-            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n\n')
+            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n')
 
