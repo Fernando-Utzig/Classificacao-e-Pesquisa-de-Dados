@@ -146,7 +146,7 @@ with open('entrada2.txt', 'r') as f:
             arq.write(f'TEMPO {tempo} EM SEGUNDOS\n\n')
 
         inicio = time.time()
-        quick_sort_random_hoare(array2, start, end)
+        quick_sort_random_hoare(array3, start, end)
         fim = time.time()
         tempo = fim - inicio
         with open('stats-aleatorio-hoare.txt', 'a') as arq:
@@ -154,7 +154,7 @@ with open('entrada2.txt', 'r') as f:
             arq.write(f'TEMPO {tempo} EM SEGUNDOS\n\n')
 
         inicio = time.time()
-        quick_sort_random_lomuto(array2, start, end)
+        quick_sort_random_lomuto(array4, start, end)
         fim = time.time()
         tempo = fim - inicio
         with open('stats-aleatorio-lomuto.txt', 'a') as arq:
