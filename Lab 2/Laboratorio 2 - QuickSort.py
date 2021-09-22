@@ -5,9 +5,6 @@ import statistics
 O que falta:
 -contar swaps
 -contar recursoes
--cronometrar o tempo
--ler arquivos de entrada
--escrever em arquivos de saída
 """
 
 # Escolhe um particionador randomizado  (funcionando)
