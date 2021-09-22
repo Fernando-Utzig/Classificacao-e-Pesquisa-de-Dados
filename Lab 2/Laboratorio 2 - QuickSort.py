@@ -111,26 +111,53 @@ def quick_sort_part3_lomuto(array, start, end):
 
 
 # MAIN
-array = [10, 25, 69, 10, 7, 86, 50, 168, 984, 102, 1, 0, 754, 235]  # Array de teste
-array2 = array.copy()
-array3 = array.copy()
-array4 = array.copy()
+# MAIN
 
-start = 0
-end = len(array) - 1
+tam = [100, 1000, 10000, 100000, 1000000]  # tamanhos dos vetores
 
-print("Random Hoare")
-quick_sort_random_hoare(array, start, end)
-print(array)
+with open('entrada2.txt', 'r') as f:
+    for k in range(5):
+        data = f.readline()
+        array = [int(i) for i in data.split()]
 
-print("Part3 Hoare")
-quick_sort_part3_hoare(array2, start, end)
-print(array2)
+        del array[0]
 
-print("Random Lomuto")
-quick_sort_random_lomuto(array3, start, end)
-print(array3)
+        start = 0
+        end = len(array) - 1
 
-print("Part3 Lomuto")
-quick_sort_random_lomuto(array4, start, end)
-print(array4)
+        array2 = array.copy()
+        array3 = array.copy()
+        array4 = array.copy()
+
+        inicio = time.time()
+        quick_sort_part3_hoare(array, start, end)
+        fim = time.time()
+        tempo = fim - inicio
+        with open('stats-mediana-hoare.txt', 'a') as arq:
+            arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
+            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n\n')
+
+        inicio = time.time()
+        quick_sort_part3_lomuto(array2, start, end)
+        fim = time.time()
+        tempo = fim - inicio
+        with open('stats-mediana-lomuto.txt', 'a') as arq:
+            arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
+            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n\n')
+
+        inicio = time.time()
+        quick_sort_random_hoare(array2, start, end)
+        fim = time.time()
+        tempo = fim - inicio
+        with open('stats-aleatorio-hoare.txt', 'a') as arq:
+            arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
+            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n\n')
+
+        inicio = time.time()
+        quick_sort_random_lomuto(array2, start, end)
+        fim = time.time()
+        tempo = fim - inicio
+        with open('stats-aleatorio-lomuto.txt', 'a') as arq:
+            arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
+            arq.write(f'TEMPO {tempo} EM SEGUNDOS\n\n')
+
