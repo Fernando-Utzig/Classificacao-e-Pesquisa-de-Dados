@@ -83,8 +83,8 @@ def quick_sort_part3_hoare(array, start, end):
         part_mediana(array, start, end)
         pi = hoare_partition(array, start, end)
 
-        quick_sort_random_hoare(array, start, pi)
-        quick_sort_random_hoare(array, pi + 1, end)
+        quick_sort_part3_hoare(array, start, pi)
+        quick_sort_part3_hoare(array, pi + 1, end)
 
 
 # particionador aleatorio e particionamento de Lomuto
@@ -103,8 +103,8 @@ def quick_sort_part3_lomuto(array, start, end):
         part_mediana(array, start, end)
         pi = lomuto_partition(array, start, end)
 
-        quick_sort_random_lomuto(array, start, pi - 1)
-        quick_sort_random_lomuto(array, pi + 1, end)
+        quick_sort_part3_lomuto(array, start, pi - 1)
+        quick_sort_part3_lomuto(array, pi + 1, end)
 
 
 # MAIN
