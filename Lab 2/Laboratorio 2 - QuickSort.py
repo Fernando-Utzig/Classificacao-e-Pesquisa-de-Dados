@@ -1,11 +1,12 @@
 import random
 import statistics
+import time
 
 """
 O que falta:
 -contar swaps
--contar recursoes
 """
+
 
 # Escolhe um particionador randomizado  (funcionando)
 def part_random(array, start, end):
@@ -68,49 +69,51 @@ def lomuto_partition(array, start, end):  # def lomuto(vet, start, end, swaps):
 
 
 # particionador aleatorio e particionamento de Hoare
-def quick_sort_random_hoare(array, start, end):
+def quick_sort_random_hoare(array, start, end, recursao):
     if start < end:
+        recursao[0] += 1
         part_random(array, start, end)
         pi = hoare_partition(array, start, end)
 
-        quick_sort_random_hoare(array, start, pi)
-        quick_sort_random_hoare(array, pi + 1, end)
-
+        quick_sort_random_hoare(array, start, pi, recursao)
+        quick_sort_random_hoare(array, pi + 1, end, recursao)
 
 # particionador mediana de 3 e particionamento de Hoare
-def quick_sort_part3_hoare(array, start, end):
+def quick_sort_part3_hoare(array, start, end, recursao):
     if start < end:
+        recursao[0] += 1
         part_mediana(array, start, end)
         pi = hoare_partition(array, start, end)
 
-        quick_sort_part3_hoare(array, start, pi)
-        quick_sort_part3_hoare(array, pi + 1, end)
+        quick_sort_part3_hoare(array, start, pi, recursao)
+        quick_sort_part3_hoare(array, pi + 1, end, recursao)
 
 
 # particionador aleatorio e particionamento de Lomuto
-def quick_sort_random_lomuto(array, start, end):
+def quick_sort_random_lomuto(array, start, end, recursao):
     if start < end:
+        recursao[0] += 1
         part_random(array, start, end)
         pi = lomuto_partition(array, start, end)
 
-        quick_sort_random_lomuto(array, start, pi - 1)
-        quick_sort_random_lomuto(array, pi + 1, end)
+        quick_sort_random_lomuto(array, start, pi - 1, recursao)
+        quick_sort_random_lomuto(array, pi + 1, end, recursao)
 
 
 # particionador mediana de 3 e particionamento de Lomuto
-def quick_sort_part3_lomuto(array, start, end):
+def quick_sort_part3_lomuto(array, start, end, recursao):
     if start < end:
+        recursao[0] += 1
         part_mediana(array, start, end)
         pi = lomuto_partition(array, start, end)
 
-        quick_sort_part3_lomuto(array, start, pi - 1)
-        quick_sort_part3_lomuto(array, pi + 1, end)
+        quick_sort_part3_lomuto(array, start, pi - 1, recursao)
+        quick_sort_part3_lomuto(array, pi + 1, end, recursao)
 
 
 # MAIN
-# MAIN
-
 tam = [100, 1000, 10000, 100000, 1000000]  # tamanhos dos vetores
+recursao = [-1]
 
 with open('entrada2.txt', 'r') as f:
     for k in range(5):
@@ -126,35 +129,43 @@ with open('entrada2.txt', 'r') as f:
         array3 = array.copy()
         array4 = array.copy()
 
+        recursao[0] = -1
         inicio = time.time()
-        quick_sort_part3_hoare(array, start, end)
+        quick_sort_part3_hoare(array, start, end, recursao)
         fim = time.time()
         tempo = fim - inicio
         with open('stats-mediana-hoare.txt', 'a') as arq:
             arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
+            arq.write(f'RECURSOES {recursao[0]}\n')
             arq.write(f'TEMPO {tempo} EM SEGUNDOS\n')
 
+        recursao[0] = -1
         inicio = time.time()
-        quick_sort_part3_lomuto(array2, start, end)
+        quick_sort_part3_lomuto(array2, start, end, recursao)
         fim = time.time()
         tempo = fim - inicio
         with open('stats-mediana-lomuto.txt', 'a') as arq:
             arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
+            arq.write(f'RECURSOES {recursao[0]}\n')
             arq.write(f'TEMPO {tempo} EM SEGUNDOS\n')
 
+        recursao[0] = -1
         inicio = time.time()
-        quick_sort_random_hoare(array3, start, end)
+        quick_sort_random_hoare(array3, start, end, recursao)
         fim = time.time()
         tempo = fim - inicio
         with open('stats-aleatorio-hoare.txt', 'a') as arq:
             arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
+            arq.write(f'RECURSOES {recursao[0]}\n')
             arq.write(f'TEMPO {tempo} EM SEGUNDOS\n')
 
+        recursao[0] = -1
         inicio = time.time()
-        quick_sort_random_lomuto(array4, start, end)
+        quick_sort_random_lomuto(array4, start, end, recursao)
         fim = time.time()
         tempo = fim - inicio
         with open('stats-aleatorio-lomuto.txt', 'a') as arq:
             arq.write(f'TAMANHO ENTRADA {tam[k]}\n')
+            arq.write(f'RECURSOES {recursao[0]}\n')
             arq.write(f'TEMPO {tempo} EM SEGUNDOS\n')
 
