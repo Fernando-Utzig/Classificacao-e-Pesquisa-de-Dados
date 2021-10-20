@@ -26,7 +26,7 @@ def consulta(arr, word, M):
 # ----------- MAIN ----------- 
 
 M = [503, 2503, 5003, 7507]                         # Tamanhos das tabelas Hash
-vet_colisoes = [50]
+vet_colisoes = []
 soma = 0
 maior_colisao = 0
 
