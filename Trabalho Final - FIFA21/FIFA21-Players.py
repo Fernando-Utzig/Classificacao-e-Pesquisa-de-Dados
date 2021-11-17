@@ -58,8 +58,8 @@ with open('players.csv') as f:
 del players[0]
 
 name = input("Digite um nome para pesquisar.")
-consult = (tr.search(name))
-print(consult)
+pesquisa = (tr.search(name))
+print(consulta)
 
 """
 import csv
