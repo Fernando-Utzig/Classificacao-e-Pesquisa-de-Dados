@@ -52,14 +52,73 @@ def insert_trie(contents):
                 string = string + i
         tr.insert(string)
 
+            
+def polinomial_hash_nomes_players(word, M):
+    p = 31                                          # Primeiro número primo > 26
+    hash = 0
+    for i in word:
+        if (i != '\n') and (i != ' '):              # Tranforma as letras em int e soma elas
+            num = ord(i)
+            hash = (p * hash + num) % M             # Calculo polinomial
+    return hash
+
+
+# Na pesquisa por nome, adiciona informações à pesquisa
+def pesquisa_por_nome(nome, hash):
+    pos_hash = polinomial_hash_nomes_players(nome, len(hash))
+    posiveis_nomes = hash[pos_hash]
+    for i in range(0, len(posiveis_nomes)):
+        cursor1 = 0
+        cursor2 = 0
+        cont_cursor = 0
+        while cursor1 != ',':                           # Pega o nome do jogador entre a primeira e segunda virgula
+            cursor1 = posiveis_nomes[i][cont_cursor]
+            cont_cursor += 1
+        cursor_inicio = cont_cursor - 1
+        while cursor2 != ',':
+            cursor2 = posiveis_nomes[i][cont_cursor]
+            cont_cursor += 1
+        cursor_final = cont_cursor - 1
+        nome_jogador = posiveis_nomes[i][cursor_inicio + 1:cursor_final]
+        if nome == nome_jogador:
+            return posiveis_nomes[i]
         
 with open('players.csv') as f:
     players = f.readlines()
 del players[0]
 
-name = input("Digite um nome para pesquisar.")
+
+# Monta a tabela hash usando o nome do jogador
+M = int(len(players) / 5)                               # Tamanho da tabela hash
+hash_players = [[] for _ in range(0, M)]
+for i in range(0, len(players)):
+    cursor_inicio = 0
+    cursor_final = 0
+    cursor1 = 0
+    cursor2 = 0
+    cont_cursor = 0
+    while cursor1 != ',':                               # Pega o nome do jogador entre a primeira e segunda virgula
+        cursor1 = players[i][cont_cursor]
+        cont_cursor += 1
+    cursor_inicio = cont_cursor - 1
+    while cursor2 != ',':
+        cursor2 = players[i][cont_cursor]
+        cont_cursor += 1
+    cursor_final = cont_cursor - 1
+    nome_jogador_players = players[i][cursor_inicio + 1:cursor_final]
+    pos_hash = polinomial_hash_nomes_players(nome_jogador_players, M)
+    hash_players[pos_hash].append(players[i])
+    
+
+tr = Trie()
+insert_trie(players)
+
+name = input("Digite um nome para pesquisar:\n")
+name = name.capitalize()
 pesquisa = (tr.search(name))
-print(consulta)
+for x in pesquisa:
+    info = pesquisa_por_nome(x, hash_players)
+    print(info)
 
 """
 import csv
