@@ -109,6 +109,33 @@ for i in range(0, len(players)):
     pos_hash = polinomial_hash_nomes_players(nome_jogador_players, M)
     hash_players[pos_hash].append(players[i])
     
+    
+# Abertura do arquivo rating e criação do hash desse arquivo -----------------------------------------------------------
+with open('minirating.csv') as f:
+    rating = f.readlines()
+del rating[0]
+
+M_rating = int(len(rating) / 4)
+hash_rating = [[] for _ in range(0, M_rating)]
+for i in range(0, len(rating)):
+    cursor_inicio = 0
+    cursor_final = 0
+    cursor1 = 0
+    cursor2 = 0
+    cont_cursor = 0
+    while cursor1 != ',':                               # Pega o ID do jogador entre a primeira e segunda virgula
+        cursor1 = rating[i][cont_cursor]
+        cont_cursor += 1
+    cursor_inicio = cont_cursor - 1
+    while cursor2 != ',':
+        cursor2 = rating[i][cont_cursor]
+        cont_cursor += 1
+    cursor_final = cont_cursor - 1
+    id_jogador_rating = rating[i][cursor_inicio + 1:cursor_final]
+    pos_hash = polinomial_hash_id_players(id_jogador_rating, M_rating)
+    hash_rating[pos_hash].append(rating[i])
+
+
 
 tr = Trie()
 insert_trie(players)
