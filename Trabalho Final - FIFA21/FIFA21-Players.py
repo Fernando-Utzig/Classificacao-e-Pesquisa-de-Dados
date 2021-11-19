@@ -203,6 +203,7 @@ while True:
         break
     else:
         comando = comando.split(' ')
+        comando[0] = comando[0].lower()
         if comando[0] == 'player':
             name = comando[1]
             name = name.capitalize()
