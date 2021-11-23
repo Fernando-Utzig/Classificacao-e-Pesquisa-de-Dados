@@ -59,7 +59,7 @@ def insert_trie(contents):
 
 # Calculo hash usando o id do jogador ou do user
 def polinomial_hash_id_players(word, M):
-    p = 11                                          # Primeiro número primo > 10,
+    p = 11                                                      # Primeiro número primo > 10,
     hash_primario = 0
     hash_final = 0
     for i in word:
@@ -105,6 +105,7 @@ def calculo_media(hash_rating, vet_players, M_rating, hash_players, M_players):
     return hash_players
 
 
+# Procura um nome dentro da tabela hash
 def pesquisa_por_nome(nome, hash_players):
     pos_hash = polinomial_hash_nomes_players(nome, len(hash_players))
     posiveis_nomes = hash_players[pos_hash]
@@ -151,39 +152,42 @@ for i in range(0, len(players)):
     a = players[i].split(',')
     players[i] = a
 
-# Cria uma tabela Hash para jogadores utilizando os nomes
+# Cria uma tabela Hash para jogadores utilizando os nomes e outra utilizando o id
 M_players = int(len(players) / 5)
 hash_players = [[] for _ in range(0, M_players)]
 hash_players_id = hash_players.copy()
 for j in range(0, len(players)):
-    pos_hash_players = polinomial_hash_nomes_players(players[j][1], M_players)
-    pos_hash_players_id = polinomial_hash_id_players(players[j][0], M_players)
+    pos_hash_players = polinomial_hash_nomes_players(players[j][1], M_players)      # tabela hash calculada usando nomes
+    pos_hash_players_id = polinomial_hash_id_players(players[j][0], M_players)      # tabela hash calculada usando id
 
-    players[j][len(players[j])-1] = players[j][len(players[j])-1][:-1]
+    players[j][len(players[j])-1] = players[j][len(players[j])-1][:-1]              # retira o \n
 
     hash_players[pos_hash_players].append(players[j])
     hash_players_id[pos_hash_players_id].append(players[j])
 # ----------------------------------------------------------------------------------------------------------------------
 
 # Abertura do arquivo de notas
-with open('minirating.csv') as f:
+with open('rating.csv') as f:
     rating = f.readlines()
 del(rating[0])
 
+# Separa os itens a cada virgula
 for i in range(0, len(rating)):
     a = rating[i].split(',')
     rating[i] = a
 
-M_rating = int(len(rating) / 5)
-hash_rating = [[] for _ in range(0, M_rating)]
+M_rating = int(len(rating) / 5)                                         # Criação da tabela hash de rating, calculado
+hash_rating = [[] for _ in range(0, M_rating)]                          # pelo ID do jogador
 for j in range(0, len(rating)):
     pos_hash_rating = polinomial_hash_id_players(rating[j][1], M_rating)
     hash_rating[pos_hash_rating].append(rating[j])
 
-# ----------------------------------------------------------------------------------------------------------------------
+
+# Adiciona a média das notas e a quantidade de notas dadas ao hash de players-------------------------------------------
 hash_players_stg2 = calculo_media(hash_rating, players, M_rating, hash_players, M_players)
 # ----------------------------------------------------------------------------------------------------------------------
 
+# Cria tabela hash com arquivo rating calculando posição hash com ID do user
 M_users = M_rating
 hash_users = [[] for _ in range(0, M_users)]
 for j in range(0, len(rating)):
@@ -197,6 +201,7 @@ fim = time.time()
 tempo = fim - inicio
 print(f'Tempo para carregamento de dados: {tempo} segundos')
 
+# Repetição de pesquisa
 while True:
     comando = input("Digite um comando: ")
     if comando.lower() == "quit":
